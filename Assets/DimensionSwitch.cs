@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DimensionSwitch : MonoBehaviour {
+public class DimensionSwitch : MonoBehaviour 
+{
 
 	BoxCollider collider;
 	bool xyMode;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		xyMode = true;
 		collider = GetComponent<BoxCollider>();
 		collider.size = new Vector3(1, 1, 100);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		if(Input.GetKeyDown(KeyCode.Space)) {
 			if(xyMode) {
 				collider.size = new Vector3(1, 100, 1);
