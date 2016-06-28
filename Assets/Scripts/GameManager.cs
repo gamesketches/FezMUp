@@ -14,6 +14,16 @@ public class GameManager : MonoBehaviour
 		instance = this;
 
 		enemiesGroup = GameObject.Find("Enemies");
+
+		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("xy")) {
+			enemy.GetComponent<BoxCollider> ().size = new Vector3 (1, 1, 100);
+		}
+		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("xz")) {
+			enemy.GetComponent<BoxCollider> ().size = new Vector3 (1, 100, 1);
+		}
+		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("yz")) {
+			enemy.GetComponent<BoxCollider> ().size = new Vector3 (100, 1, 1);
+		}
 	}
 	
 	// Update is called once per frame
