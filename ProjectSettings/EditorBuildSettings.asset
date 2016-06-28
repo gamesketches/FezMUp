@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Name entry.unity
   - enabled: 1
     path: Assets/Scenes/main.unity
+  - enabled: 1
+    path: Assets/Scenes/High scores.unity
