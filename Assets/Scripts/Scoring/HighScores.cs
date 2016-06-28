@@ -7,6 +7,7 @@ public class HighScores : MonoBehaviour {
 
 	private const string HIGH_SCORE_PATH = "/Scores/";
 	public string highScoreFile = "HighScores.txt";
+	public string highScoreNamesFile = "HighScoreNames.txt";
 
 	bool highScoresChanged;
 
@@ -24,7 +25,7 @@ public class HighScores : MonoBehaviour {
 				highScores.Insert(i, currentScore);
 				ValueHolder.insertPoint = i;
 				UpdateHighScoreList(highScores);
-				SceneManager.LoadScene("Name entry");
+				UpdateHighScoreNames();
 			}
 
 			SceneManager.LoadScene("High scores");
@@ -55,5 +56,36 @@ public class HighScores : MonoBehaviour {
 		FileIO.WriteStringToFile(Application.dataPath + HIGH_SCORE_PATH + highScoreFile,
 								 revisedScores,
 								 false);
+	}
+
+	string revisedNames = "";
+
+	void UpdateHighScoreNames()
+	{
+		List<string> names = GetOldNames();
+
+		names.Insert(ValueHolder.insertPoint, ValueHolder.name);
+
+		for (int i = 0; i < ValueHolder.scoresTracked; i++)
+		{
+			revisedNames += names[i] + ",";
+		}
+
+		revisedNames = revisedNames.Trim(',');
+
+		FileIO.WriteStringToFile(Application.dataPath + HIGH_SCORE_PATH + highScoreNamesFile,
+								 revisedNames,
+								 false);
+	}
+
+	List<string> GetOldNames()
+	{
+		string[] oldHighScoreNames = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoreNamesFile,
+																	 ',');
+		List<string> oldNames = new List<string>();
+
+		foreach (string value in oldHighScoreNames) { oldNames.Add(value); }
+
+		return oldNames;
 	}
 }
