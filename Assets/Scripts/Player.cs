@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 				isSwitchingHappening = true;
 
 				//rotate the player and enemies to x rotation to 0
-				HOTween.To(this.gameObject.transform, 0.5f, new TweenParms().Prop("localRotation", new Vector3(-90f,0f,0f), false).OnComplete(OnPlayerRotationFinished).Ease(EaseType.Linear).Delay(0f));
+				HOTween.To(this.gameObject.transform.parent.gameObject.transform, 0.5f, new TweenParms().Prop("localRotation", new Vector3(-90f,0f,0f), false).OnComplete(OnPlayerRotationFinished).Ease(EaseType.Linear).Delay(0f));
 				HOTween.To(GameManager.instance.enemiesGroup.transform, 0.5f, new TweenParms().Prop("localRotation", new Vector3(-90f,0f,0f), false).OnComplete(OnEnemiesRotationFinished).Ease(EaseType.Linear).Delay(0f));
 			}
 			else 
@@ -62,29 +62,33 @@ public class Player : MonoBehaviour
 				isSwitchingHappening = true;
 
 				//rotate the player and enemies to x rotation to 0
-				HOTween.To(this.gameObject.transform, 0.5f, new TweenParms().Prop("localRotation", new Vector3(0f,0f,0f), false).OnComplete(OnPlayerRotationFinished).Ease(EaseType.Linear).Delay(0f));
+				HOTween.To(this.gameObject.transform.parent.gameObject.transform, 0.5f, new TweenParms().Prop("localRotation", new Vector3(0f,0f,0f), false).OnComplete(OnPlayerRotationFinished).Ease(EaseType.Linear).Delay(0f));
 				HOTween.To(GameManager.instance.enemiesGroup.transform, 0.5f, new TweenParms().Prop("localRotation", new Vector3(0f,0f,0f), false).OnComplete(OnEnemiesRotationFinished).Ease(EaseType.Linear).Delay(0f));
 			}
 		}
 
-		if (Input.GetKey(KeyCode.W))
-		{
-			this.gameObject.transform.position += new Vector3(0f, 1f, 0f) * speed * Time.deltaTime;
-		}
-		//else
-		if (Input.GetKey(KeyCode.S))
-		{
-			this.gameObject.transform.position += new Vector3(0f, -1f, 0f) * speed * Time.deltaTime;
-		}
-		//else
-		if (Input.GetKey(KeyCode.A))
-		{
-			this.gameObject.transform.position += new Vector3(-1f, 0f, 0f) * speed * Time.deltaTime;
-		}
-		//else
-		if (Input.GetKey(KeyCode.D))
-		{
-			this.gameObject.transform.position += new Vector3(1f, 0f, 0f) * speed * Time.deltaTime;
+		//not receiving input movement when switching is happening
+		if (!isSwitchingHappening)
+			{
+			if (Input.GetKey(KeyCode.W))
+			{
+				this.gameObject.transform.position += new Vector3(0f, 1f, 0f) * speed * Time.deltaTime;
+			}
+			//else
+			if (Input.GetKey(KeyCode.S))
+			{
+				this.gameObject.transform.position += new Vector3(0f, -1f, 0f) * speed * Time.deltaTime;
+			}
+			//else
+			if (Input.GetKey(KeyCode.A))
+			{
+				this.gameObject.transform.position += new Vector3(-1f, 0f, 0f) * speed * Time.deltaTime;
+			}
+			//else
+			if (Input.GetKey(KeyCode.D))
+			{
+				this.gameObject.transform.position += new Vector3(1f, 0f, 0f) * speed * Time.deltaTime;
+			}
 		}
 
 		if (this.gameObject.transform.position.x <= -9.4f)
