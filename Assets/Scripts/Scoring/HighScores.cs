@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class HighScores : MonoBehaviour {
 
 	private const string HIGH_SCORE_PATH = "/Scores/";
-	public string highScoreFile = "HighScores.txt";
+	public string highScoresFile = "HighScores.txt";
 	public string highScoreNamesFile = "HighScoreNames.txt";
 
 	bool highScoresChanged;
@@ -34,7 +34,7 @@ public class HighScores : MonoBehaviour {
 
 	List<int> GetOldScores()
 	{
-		string[] oldHighScores = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoreFile, ',');
+		string[] oldHighScores = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoresFile, ',');
 		List<int> oldScores = new List<int>();
 
 		foreach (string value in oldHighScores) { oldScores.Add(int.Parse(value)); }
@@ -53,7 +53,7 @@ public class HighScores : MonoBehaviour {
 
 		revisedScores = revisedScores.Trim(',');
 
-		FileIO.WriteStringToFile(Application.dataPath + HIGH_SCORE_PATH + highScoreFile,
+		FileIO.WriteStringToFile(Application.dataPath + HIGH_SCORE_PATH + highScoresFile,
 								 revisedScores,
 								 false);
 	}
