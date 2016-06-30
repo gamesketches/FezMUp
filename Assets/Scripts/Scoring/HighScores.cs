@@ -13,12 +13,14 @@ public class HighScores : MonoBehaviour {
 
 	public void RecalculateHighScores()
 	{
-		int currentScore = GetComponent<Timer>().TotalTime;
+		int currentScore = GameObject.Find("Canvas").GetComponent<Timer>().TotalTime;
 
 		List<int> highScores = GetOldScores();
 
 		for (int i = 0; i < highScores.Count; i++)
 		{
+			Debug.Log("highScores[" + i + "] == " + highScores[i]);
+
 			if (currentScore > highScores[i])
 			{
 				Debug.Log("Inserting " + currentScore);
@@ -26,10 +28,11 @@ public class HighScores : MonoBehaviour {
 				ValueHolder.insertPoint = i;
 				UpdateHighScoreList(highScores);
 				UpdateHighScoreNames();
+				break;
 			}
-
-			SceneManager.LoadScene("High scores");
 		}
+
+		SceneManager.LoadScene("High scores");
 	}
 
 	List<int> GetOldScores()
@@ -63,6 +66,7 @@ public class HighScores : MonoBehaviour {
 	void UpdateHighScoreNames()
 	{
 		List<string> names = GetOldNames();
+		Debug.Log("names.Count == " + names.Count);
 
 		names.Insert(ValueHolder.insertPoint, ValueHolder.name);
 
@@ -82,9 +86,12 @@ public class HighScores : MonoBehaviour {
 	{
 		string[] oldHighScoreNames = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoreNamesFile,
 																	 ',');
+		Debug.Log("oldHighScoreNames.Length == " + oldHighScoreNames.Length);
+		Debug.Log("oldHighScoreNames[0] == " + oldHighScoreNames[0]);
 		List<string> oldNames = new List<string>();
 
 		foreach (string value in oldHighScoreNames) { oldNames.Add(value); }
+		Debug.Log("oldNames.Count == " + oldNames.Count);
 
 		return oldNames;
 	}
