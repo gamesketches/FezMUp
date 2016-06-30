@@ -19,11 +19,8 @@ public class HighScores : MonoBehaviour {
 
 		for (int i = 0; i < highScores.Count; i++)
 		{
-			Debug.Log("highScores[" + i + "] == " + highScores[i]);
-
 			if (currentScore > highScores[i])
 			{
-				Debug.Log("Inserting " + currentScore);
 				highScores.Insert(i, currentScore);
 				ValueHolder.insertPoint = i;
 				UpdateHighScoreList(highScores);
@@ -66,7 +63,6 @@ public class HighScores : MonoBehaviour {
 	void UpdateHighScoreNames()
 	{
 		List<string> names = GetOldNames();
-		Debug.Log("names.Count == " + names.Count);
 
 		names.Insert(ValueHolder.insertPoint, ValueHolder.name);
 
@@ -86,12 +82,9 @@ public class HighScores : MonoBehaviour {
 	{
 		string[] oldHighScoreNames = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoreNamesFile,
 																	 ',');
-		Debug.Log("oldHighScoreNames.Length == " + oldHighScoreNames.Length);
-		Debug.Log("oldHighScoreNames[0] == " + oldHighScoreNames[0]);
 		List<string> oldNames = new List<string>();
 
 		foreach (string value in oldHighScoreNames) { oldNames.Add(value); }
-		Debug.Log("oldNames.Count == " + oldNames.Count);
 
 		return oldNames;
 	}
