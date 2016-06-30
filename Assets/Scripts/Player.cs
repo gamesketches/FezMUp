@@ -152,11 +152,11 @@ public class Player : MonoBehaviour
 		if (coll.gameObject.tag == "Enemy" && !isSwitchingHappening)
 		{
 			//pause the game
-			//Time.timeScale = 0f;
+			Time.timeScale = 0f;
 
-			GameObject.Find("SceneManager").GetComponent<HighScores>().RecalculateHighScores();
+			//GameObject.Find("SceneManager").GetComponent<HighScores>().RecalculateHighScores();
 
-			//StartCoroutine(GoToHighScores());
+			StartCoroutine(GoToHighScores());
 
 			Debug.Log("Touched an enemy");
 		}
