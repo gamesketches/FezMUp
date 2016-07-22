@@ -14,11 +14,28 @@ public class ShowHighScores : MonoBehaviour {
 	void Start()
 	{
 		entry = Resources.Load("Entry") as GameObject;
-		Dictionary<string, int> entries = FindEntries();
-		DisplayEntries(entries);
+		//Dictionary<string, int> entries = FindEntries();
+		//DisplayEntries(entries);
+		string[] names = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoreNamesFile, ',');
+		string[] scoresAsString = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoresFile, ',');
+
+		int[] scoresAsInt = TurnScoresToInt(scoresAsString);
+		DisplayEntries(names, scoresAsInt);
 	}
 
-	Dictionary<string, int> FindEntries()
+	int[] TurnScoresToInt(string[] scoresAsString)
+	{
+		int[] scores = new int[scoresAsString.Length];
+
+		for (int i = 0; i < scoresAsString.Length; i++)
+		{
+			scores[i] = int.Parse(scoresAsString[i]);
+		}
+
+		return scores;
+	}
+
+	/*Dictionary<string, int> FindEntries()
 	{
 		string[] names = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoreNamesFile, ',');
 		string[] scores = FileIO.SplitStringArrayFromFile(Application.dataPath + HIGH_SCORE_PATH + highScoresFile, ',');
@@ -31,13 +48,13 @@ public class ShowHighScores : MonoBehaviour {
 		}
 
 		return entries;
-	}
+	}*/
 
 	public float offset = 1.0f; //offset must be negative, or else high scores will display with lowest score on top!
 	public float xStartPos = 0.0f;
 	public float yStartPos = 0.0f;
 
-	void DisplayEntries(Dictionary<string, int> entries)
+	/*void DisplayEntries(Dictionary<string, int> entries)
 	{
 		int numEntries = 0;
 
@@ -53,6 +70,26 @@ public class ShowHighScores : MonoBehaviour {
 			highScoreLine.transform.FindChild("Name").GetComponent<Text>().text = name;
 
 			TurnScoreIntoTime(highScoreLine, entries[name]);
+		}
+	}*/
+
+	void DisplayEntries(string[] names, int[] scores) //names.Length must equal scores.Length
+	{
+		if (names.Length != scores.Length) { Debug.Log("names.Length != scores.Length"); }
+
+		int numEntries = 0;
+
+		for (int i = 0; i < names.Length; i++)
+		{
+			GameObject highScoreLine = Instantiate(entry, new Vector3(xStartPos, yStartPos, 0.0f), Quaternion.identity) as GameObject;
+			highScoreLine.transform.SetParent(transform.root.Find("High scores"), false);
+
+			//reposition the entry
+			highScoreLine.transform.localPosition = new Vector3(0.0f, 0.0f + offset * numEntries, 0.0f);
+			numEntries++;
+
+			highScoreLine.transform.FindChild("Name").GetComponent<Text>().text = names[i];
+			TurnScoreIntoTime(highScoreLine, scores[i]);
 		}
 	}
 

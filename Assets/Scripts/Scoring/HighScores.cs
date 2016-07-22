@@ -13,7 +13,7 @@ public class HighScores : MonoBehaviour {
 
 	public void RecalculateHighScores()
 	{
-		int currentScore = GetComponent<Timer>().TotalTime;
+		int currentScore = GameObject.Find("Canvas").GetComponent<Timer>().TotalTime;
 
 		List<int> highScores = GetOldScores();
 
@@ -21,15 +21,15 @@ public class HighScores : MonoBehaviour {
 		{
 			if (currentScore > highScores[i])
 			{
-				Debug.Log("Inserting " + currentScore);
 				highScores.Insert(i, currentScore);
 				ValueHolder.insertPoint = i;
 				UpdateHighScoreList(highScores);
 				UpdateHighScoreNames();
+				break;
 			}
-
-			SceneManager.LoadScene("High scores");
 		}
+
+		SceneManager.LoadScene("High scores");
 	}
 
 	List<int> GetOldScores()
